@@ -145,6 +145,7 @@ export default function Step3Atributos() {
                 <DiceRoller
                   onRollComplete={(value) => handleDiceRoll(attr.key, value)}
                   label={`Rolar para ${attr.label}`}
+                  disabled={!!diceRolls[attr.key]}
                 />
               </div>
             ))}

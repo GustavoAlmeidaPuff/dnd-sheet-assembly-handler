@@ -6,13 +6,16 @@ import Button from './Button';
 interface DiceRollerProps {
   onRollComplete: (value: number) => void;
   label?: string;
+  disabled?: boolean;
 }
 
-export default function DiceRoller({ onRollComplete, label = 'Rolar Dados' }: DiceRollerProps) {
+export default function DiceRoller({ onRollComplete, label = 'Rolar Dados', disabled = false }: DiceRollerProps) {
   const [rolls, setRolls] = useState<number[]>([]);
   const [finalValue, setFinalValue] = useState<number | null>(null);
 
   const roll4d6 = () => {
+    if (disabled || finalValue !== null) return;
+    
     // Rolar 4 dados de 6 lados
     const diceRolls: number[] = [];
     for (let i = 0; i < 4; i++) {
@@ -31,7 +34,7 @@ export default function DiceRoller({ onRollComplete, label = 'Rolar Dados' }: Di
 
   return (
     <div className="space-y-4">
-      <Button onClick={roll4d6} variant="secondary">
+      <Button onClick={roll4d6} variant="secondary" disabled={disabled || finalValue !== null}>
         {label}
       </Button>
       
