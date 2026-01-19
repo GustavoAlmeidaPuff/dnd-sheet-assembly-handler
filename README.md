@@ -1,36 +1,120 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Forja de Personagens D&D 5e
 
-## Getting Started
+Aplicação full-stack para criação de personagens de D&D 5ª Edição com wizard completo e preview de ficha em tempo real.
 
-First, run the development server:
+## 🎯 Características
+
+- **Wizard de 7 passos** guiado para criação de personagens
+- **Preview em tempo real** da ficha do personagem sempre visível
+- **Integração com DND5EAPI** para dados oficiais de raças, classes e backgrounds
+- **Autenticação Firebase** com Google OAuth
+- **Salvamento na nuvem** com Firestore
+- **Design responsivo** com preview fixo (desktop) ou colapsável (mobile)
+- **Cálculos automáticos** de modificadores, CA e PV
+
+## 🛠️ Tecnologias
+
+- **Next.js 16** (App Router)
+- **React 19**
+- **Tailwind CSS 4**
+- **Firebase** (Auth + Firestore)
+- **TypeScript**
+- **DND5EAPI** (API pública para dados de D&D 5e)
+
+## 📋 Pré-requisitos
+
+- Node.js 18+ 
+- npm ou yarn
+- Conta Firebase (para autenticação e banco de dados)
+
+## 🚀 Configuração
+
+1. **Clone o repositório e instale as dependências:**
+
+```bash
+npm install
+```
+
+2. **Configure o Firebase:**
+
+   - Acesse [Firebase Console](https://console.firebase.google.com/)
+   - Crie um novo projeto
+   - Ative Authentication → Google
+   - Crie um banco de dados Firestore
+   - Copie as credenciais do projeto
+
+3. **Crie o arquivo `.env.local` na raiz do projeto:**
+
+```env
+NEXT_PUBLIC_FIREBASE_API_KEY=sua_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=seu_projeto.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=seu_projeto_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=seu_projeto.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=seu_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=seu_app_id
+```
+
+4. **Execute o servidor de desenvolvimento:**
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. **Acesse a aplicação:**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Abra [http://localhost:3000](http://localhost:3000) no navegador.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 Estrutura do Projeto
 
-## Learn More
+```
+src/
+├── app/                    # Páginas Next.js
+│   ├── page.tsx            # Landing page
+│   ├── criar-personagem/   # Wizard de criação
+│   └── meus-personagens/    # Lista de personagens
+├── components/
+│   ├── wizard/             # Componentes do wizard
+│   ├── character-sheet/     # Preview e ficha completa
+│   ├── ui/                  # Componentes reutilizáveis
+│   └── auth/                # Autenticação
+├── contexts/                # Context API
+├── lib/
+│   ├── firebase/            # Configuração Firebase
+│   ├── api/                 # Cliente DND5EAPI
+│   └── utils/               # Utilitários e cálculos
+└── types/                   # Tipos TypeScript
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 🎮 Como Usar
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Faça login** com sua conta Google
+2. **Clique em "Criar Personagem"** na landing page
+3. **Siga os 7 passos do wizard:**
+   - Escolha sua Raça
+   - Escolha sua Classe
+   - Gere seus Atributos (dados ou Standard Array)
+   - Selecione Equipamento Inicial
+   - Escolha seu Antecedente
+   - Defina Personalidade (Ideais, Vínculos, Defeitos)
+   - Revise e Salve
+4. **Visualize seus personagens** na página "Meus Personagens"
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📝 Notas
 
-## Deploy on Vercel
+- O projeto usa um **subset inicial** de raças e classes para começar pequeno
+- Raças disponíveis: Humano, Elfo, Anão, Halfling
+- Classes disponíveis: Guerreiro, Mago, Clérigo, Ladino
+- Backgrounds disponíveis: Acólito, Criminoso, Herói do Povo, Sábio
+- Os dados são buscados da API pública [DND5EAPI](https://www.dnd5eapi.co/)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔮 Próximos Passos
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Expandir raças e classes disponíveis
+- Adicionar sub-raças e sub-classes
+- Implementar magias para classes mágicas
+- Adicionar exportação PDF
+- Sistema de talentos
+
+## 📄 Licença
+
+Este projeto é de código aberto e está disponível sob a licença MIT.
