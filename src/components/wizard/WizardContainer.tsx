@@ -26,7 +26,7 @@ const steps = [
 ];
 
 export default function WizardContainer() {
-  const { currentStep, setCurrentStep } = useCharacterCreation();
+  const { currentStep, setCurrentStep, character } = useCharacterCreation();
   const [isPreviewCollapsed, setIsPreviewCollapsed] = useState(false);
   const CurrentStepComponent = steps[currentStep - 1].component;
 
@@ -56,7 +56,15 @@ export default function WizardContainer() {
       case 5:
         return true; // Sempre pode avançar, mas precisa selecionar antecedente
       case 6:
-        return true; // Sempre pode avançar, mas precisa preencher personalidade
+        // Verificar se a personalidade foi salva
+        return !!(
+          character.personality?.ideals &&
+          character.personality?.bonds &&
+          character.personality?.flaws &&
+          character.personality.ideals.trim().length > 0 &&
+          character.personality.bonds.trim().length > 0 &&
+          character.personality.flaws.trim().length > 0
+        );
       case 7:
         return false; // Último passo
       default:

@@ -11,22 +11,66 @@ import CharacterSheetFull from '@/components/character-sheet/CharacterSheetFull'
 import Button from '@/components/ui/Button';
 
 export default function Step7Revisao() {
-  const { character } = useCharacterCreation();
+  const { character, setCurrentStep } = useCharacterCreation();
   const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const validateCharacter = (): boolean => {
-    if (!character.race || !character.class || !character.background) {
-      return false;
+  const validateCharacter = (): { isValid: boolean; missingSteps: Array<{ step: number; name: string; message: string }> } => {
+    const missingSteps: Array<{ step: number; name: string; message: string }> = [];
+
+    if (!character.race) {
+      missingSteps.push({
+        step: 1,
+        name: 'Raça',
+        message: 'Você precisa selecionar uma raça',
+      });
     }
+
+    if (!character.class) {
+      missingSteps.push({
+        step: 2,
+        name: 'Classe',
+        message: 'Você precisa selecionar uma classe',
+      });
+    }
+
     if (!character.attributes || Object.values(character.attributes).some((v) => v === 0)) {
-      return false;
+      missingSteps.push({
+        step: 3,
+        name: 'Atributos',
+        message: 'Você precisa gerar e aplicar todos os atributos',
+      });
     }
+
+    if (!character.equipment || character.equipment.length === 0) {
+      missingSteps.push({
+        step: 4,
+        name: 'Equipamento',
+        message: 'O equipamento inicial precisa ser carregado',
+      });
+    }
+
+    if (!character.background) {
+      missingSteps.push({
+        step: 5,
+        name: 'Antecedente',
+        message: 'Você precisa selecionar um antecedente',
+      });
+    }
+
     if (!character.personality || !character.personality.ideals || !character.personality.bonds || !character.personality.flaws) {
-      return false;
+      missingSteps.push({
+        step: 6,
+        name: 'Personalidade',
+        message: 'Você precisa preencher Ideais, Vínculos e Defeitos',
+      });
     }
-    return true;
+
+    return {
+      isValid: missingSteps.length === 0,
+      missingSteps,
+    };
   };
 
   const handleSave = async () => {
@@ -36,8 +80,9 @@ export default function Step7Revisao() {
       return;
     }
 
-    if (!validateCharacter()) {
-      setError('Por favor, complete todos os passos do wizard antes de salvar.');
+    const validation = validateCharacter();
+    if (!validation.isValid) {
+      setError(`Por favor, complete os seguintes passos: ${validation.missingSteps.map(s => s.name).join(', ')}`);
       return;
     }
 
@@ -75,15 +120,48 @@ export default function Step7Revisao() {
     }
   };
 
-  if (!validateCharacter()) {
+  const validation = validateCharacter();
+
+  if (!validation.isValid) {
     return (
-      <div className="text-center py-12">
-        <div className="text-lg text-red-600 mb-4">
-          Por favor, complete todos os passos anteriores antes de revisar.
+      <div className="space-y-6">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">Revisão Final</h2>
+          <p className="text-gray-600">
+            Complete os passos faltantes antes de revisar
+          </p>
         </div>
-        <Button onClick={() => router.push('/criar-personagem')} variant="secondary">
-          Voltar ao Wizard
-        </Button>
+
+        <div className="bg-red-50 border-2 border-red-200 rounded-lg p-6">
+          <h3 className="text-xl font-bold text-red-900 mb-4">
+            Passos Incompletos
+          </h3>
+          <ul className="space-y-3">
+            {validation.missingSteps.map((missing) => (
+              <li key={missing.step} className="flex items-start gap-3">
+                <span className="text-red-600 font-bold text-lg">•</span>
+                <div className="flex-1">
+                  <div className="font-semibold text-red-900">
+                    Passo {missing.step}: {missing.name}
+                  </div>
+                  <div className="text-sm text-red-700">{missing.message}</div>
+                  <button
+                    onClick={() => setCurrentStep(missing.step)}
+                    className="text-sm text-blue-600 hover:text-blue-800 underline mt-1 font-semibold"
+                  >
+                    → Ir para o Passo {missing.step}: {missing.name}
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="text-center">
+          <Button onClick={() => router.push('/criar-personagem')} variant="secondary">
+            Voltar ao Wizard
+          </Button>
+        </div>
       </div>
     );
   }

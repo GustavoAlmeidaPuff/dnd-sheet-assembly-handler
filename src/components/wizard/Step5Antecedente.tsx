@@ -44,11 +44,11 @@ export default function Step5Antecedente() {
               <div className="space-y-3">
                 <div>
                   <div className="font-semibold text-gray-800 mb-1 text-sm">História:</div>
-                  <div className="text-xs text-gray-700 line-clamp-3">{background.storyHook}</div>
+                  <div className="text-xs text-gray-700">{background.storyHook}</div>
                 </div>
                 <div>
                   <div className="font-semibold text-gray-800 mb-1 text-sm">Personalidade:</div>
-                  <div className="text-xs text-gray-700 line-clamp-2">{background.personalityExample}</div>
+                  <div className="text-xs text-gray-700">{background.personalityExample}</div>
                 </div>
                 <div>
                   <div className="font-semibold text-gray-800 mb-1 text-sm">Habilidades:</div>

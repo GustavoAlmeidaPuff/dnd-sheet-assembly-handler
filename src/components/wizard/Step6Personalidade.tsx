@@ -38,11 +38,41 @@ export default function Step6Personalidade() {
   const [ideals, setIdeals] = useState(character.personality?.ideals || '');
   const [bonds, setBonds] = useState(character.personality?.bonds || '');
   const [flaws, setFlaws] = useState(character.personality?.flaws || '');
+  const [isSaved, setIsSaved] = useState(false);
   const [backgroundExamples, setBackgroundExamples] = useState<{
     ideals: string[];
     bonds: string[];
     flaws: string[];
   } | null>(null);
+
+  // Verificar se já está salvo quando o componente carrega
+  useEffect(() => {
+    if (character.personality?.ideals && character.personality?.bonds && character.personality?.flaws) {
+      setIsSaved(true);
+      setIdeals(character.personality.ideals);
+      setBonds(character.personality.bonds);
+      setFlaws(character.personality.flaws);
+    }
+  }, [character.personality]);
+
+  // Verificar se já está salvo quando o componente carrega ou quando a personalidade muda
+  useEffect(() => {
+    if (character.personality?.ideals && character.personality?.bonds && character.personality?.flaws) {
+      const hasAllFields = 
+        character.personality.ideals.trim().length > 0 &&
+        character.personality.bonds.trim().length > 0 &&
+        character.personality.flaws.trim().length > 0;
+      
+      if (hasAllFields) {
+        setIsSaved(true);
+        setIdeals(character.personality.ideals);
+        setBonds(character.personality.bonds);
+        setFlaws(character.personality.flaws);
+      }
+    } else {
+      setIsSaved(false);
+    }
+  }, [character.personality]);
 
   useEffect(() => {
     if (!character.background) return;
@@ -60,11 +90,19 @@ export default function Step6Personalidade() {
   }, [character.background]);
 
   const handleSave = () => {
+    if (!ideals.trim() || !bonds.trim() || !flaws.trim()) {
+      return;
+    }
     setPersonality({
-      ideals,
-      bonds,
-      flaws,
+      ideals: ideals.trim(),
+      bonds: bonds.trim(),
+      flaws: flaws.trim(),
     });
+    setIsSaved(true);
+  };
+
+  const isFormValid = () => {
+    return ideals.trim().length > 0 && bonds.trim().length > 0 && flaws.trim().length > 0;
   };
 
   const insertExample = (type: 'ideals' | 'bonds' | 'flaws', example: string) => {
@@ -179,15 +217,21 @@ export default function Step6Personalidade() {
       </div>
 
       <div className="text-center mt-6">
-        <Button onClick={handleSave} variant="primary">
+        <Button onClick={handleSave} variant="primary" disabled={!isFormValid()}>
           Salvar Personalidade
         </Button>
       </div>
 
-      {(ideals || bonds || flaws) && (
+      {isSaved ? (
         <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4 mt-4">
           <p className="text-green-800 font-semibold text-center">
-            ✓ Personalidade definida! Clique em "Salvar Personalidade" para confirmar.
+            ✓ Personalidade salva! Você pode avançar para a revisão final.
+          </p>
+        </div>
+      ) : (ideals || bonds || flaws) && (
+        <div className="bg-yellow-50 border-2 border-yellow-200 rounded-lg p-4 mt-4">
+          <p className="text-yellow-800 font-semibold text-center">
+            ⚠ Preencha todos os campos e clique em "Salvar Personalidade" para continuar.
           </p>
         </div>
       )}

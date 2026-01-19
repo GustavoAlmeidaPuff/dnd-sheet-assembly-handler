@@ -89,6 +89,22 @@ export default function CharacterSheetPreview() {
             <div className="text-sm text-amber-900 font-bold">{character.background.name}</div>
           </div>
         )}
+
+        {/* Personalidade */}
+        {character.personality && (
+          <div className="bg-white border border-amber-600 rounded p-2">
+            <div className="text-xs text-amber-700 font-semibold">PERSONALIDADE</div>
+            {character.personality.ideals && character.personality.bonds && character.personality.flaws ? (
+              <div className="text-xs text-green-700 font-semibold mt-1">
+                ✓ Completa
+              </div>
+            ) : (
+              <div className="text-xs text-yellow-700 font-semibold mt-1">
+                ⚠ Incompleta
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
