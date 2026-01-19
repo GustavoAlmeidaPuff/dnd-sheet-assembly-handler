@@ -10,6 +10,12 @@ export interface ClassData {
   description: string;
   proficienciesSummary: string;
   featuresSummary: string;
+  weaponProficiencies?: {
+    simpleMelee?: boolean;
+    simpleRanged?: boolean;
+    martialMelee?: boolean;
+    martialRanged?: boolean;
+  };
 }
 
 export const classesData: ClassData[] = [
@@ -23,6 +29,12 @@ export const classesData: ClassData[] = [
     description: 'Bárbaros são guerreiros ferozes que canalizam uma fúria primitiva em combate. Eles são conhecidos por sua resistência, força bruta e capacidade de entrar em fúria.',
     proficienciesSummary: 'Armaduras leves e médias, escudos, armas simples e marciais. Proficiências em Força e Constituição.',
     featuresSummary: 'Fúria, Defesa sem Armadura, Ataque Selvagem, Sentido do Perigo',
+    weaponProficiencies: {
+      simpleMelee: true,
+      simpleRanged: true,
+      martialMelee: true,
+      martialRanged: true,
+    },
   },
   {
     index: 'bard',
@@ -34,6 +46,12 @@ export const classesData: ClassData[] = [
     description: 'Bardos são artistas versáteis que usam música, palavras e magia para inspirar aliados e confundir inimigos. Eles são mestres da magia e da persuasão.',
     proficienciesSummary: 'Armaduras leves, armas simples, algumas armas marciais. Proficiências em Destreza e Carisma.',
     featuresSummary: 'Inspiração de Bardo, Magia, Canção de Descanso, Expertise',
+    weaponProficiencies: {
+      simpleMelee: true,
+      simpleRanged: true,
+      martialMelee: false,
+      martialRanged: false,
+    },
   },
   {
     index: 'cleric',
@@ -45,6 +63,12 @@ export const classesData: ClassData[] = [
     description: 'Clérigos são servos de divindades que canalizam poder divino para curar, proteger e ferir. Eles são versáteis em combate e suporte.',
     proficienciesSummary: 'Armaduras leves e médias, escudos, armas simples. Proficiências em Sabedoria e Carisma.',
     featuresSummary: 'Magia Divina, Domínio Divino, Canalizar Divindade, Cura',
+    weaponProficiencies: {
+      simpleMelee: true,
+      simpleRanged: true,
+      martialMelee: false,
+      martialRanged: false,
+    },
   },
   {
     index: 'druid',
@@ -56,6 +80,12 @@ export const classesData: ClassData[] = [
     description: 'Druidas são guardiões da natureza que usam magia primitiva para proteger o mundo natural. Eles podem se transformar em animais e controlar elementos.',
     proficienciesSummary: 'Armaduras leves e médias (não metálicas), escudos (não metálicos), armas simples. Proficiências em Inteligência e Sabedoria.',
     featuresSummary: 'Magia, Transformação Selvagem, Companheiro Animal, Magia da Natureza',
+    weaponProficiencies: {
+      simpleMelee: true,
+      simpleRanged: true,
+      martialMelee: false,
+      martialRanged: false,
+    },
   },
   {
     index: 'fighter',
@@ -67,6 +97,12 @@ export const classesData: ClassData[] = [
     description: 'Guerreiros são mestres do combate, capazes de usar qualquer arma e armadura. Eles são versáteis e podem se especializar em diferentes estilos de combate.',
     proficienciesSummary: 'Todas as armaduras, escudos, armas simples e marciais. Proficiências em Força e Constituição.',
     featuresSummary: 'Estilo de Combate, Ataque Extra, Segunda Respiração, Ação Indomável',
+    weaponProficiencies: {
+      simpleMelee: true,
+      simpleRanged: true,
+      martialMelee: true,
+      martialRanged: true,
+    },
   },
   {
     index: 'monk',
@@ -78,6 +114,12 @@ export const classesData: ClassData[] = [
     description: 'Monges são mestres das artes marciais que usam ki para realizar proezas sobre-humanas. Eles são ágeis, rápidos e letais em combate desarmado.',
     proficienciesSummary: 'Armas simples, armas de monge. Proficiências em Força e Destreza.',
     featuresSummary: 'Artes Marciais, Ki, Movimento sem Armadura, Deflexão de Mísseis',
+    weaponProficiencies: {
+      simpleMelee: true,
+      simpleRanged: true,
+      martialMelee: true,
+      martialRanged: false,
+    },
   },
   {
     index: 'paladin',
@@ -89,6 +131,12 @@ export const classesData: ClassData[] = [
     description: 'Paladinos são guerreiros sagrados que juram defender justiça e bondade. Eles combinam combate corpo a corpo com magia divina e habilidades de cura.',
     proficienciesSummary: 'Todas as armaduras, escudos, armas simples e marciais. Proficiências em Sabedoria e Carisma.',
     featuresSummary: 'Magia Divina, Golpe Divino, Cura pelas Mãos, Aura de Proteção',
+    weaponProficiencies: {
+      simpleMelee: true,
+      simpleRanged: true,
+      martialMelee: true,
+      martialRanged: true,
+    },
   },
   {
     index: 'ranger',
@@ -100,6 +148,12 @@ export const classesData: ClassData[] = [
     description: 'Patrulheiros são guardiões das fronteiras selvagens, especialistas em sobrevivência e combate à distância. Eles protegem o mundo natural e caçam ameaças.',
     proficienciesSummary: 'Armaduras leves e médias, escudos, armas simples e marciais. Proficiências em Força e Destreza.',
     featuresSummary: 'Inimigo Favorecido, Terreno Favorecido, Magia, Companheiro Animal',
+    weaponProficiencies: {
+      simpleMelee: true,
+      simpleRanged: true,
+      martialMelee: true,
+      martialRanged: true,
+    },
   },
   {
     index: 'rogue',
@@ -111,6 +165,12 @@ export const classesData: ClassData[] = [
     description: 'Ladinos são especialistas em furtividade, armadilhas e ataques precisos. Eles são versáteis fora de combate e letais quando atacam pelas costas.',
     proficienciesSummary: 'Armaduras leves, armas simples, algumas armas marciais. Proficiências em Destreza e Inteligência.',
     featuresSummary: 'Ataque Furtivo, Expertise, Esquiva Ágil, Evasão',
+    weaponProficiencies: {
+      simpleMelee: true,
+      simpleRanged: true,
+      martialMelee: false,
+      martialRanged: false,
+    },
   },
   {
     index: 'sorcerer',
@@ -122,6 +182,12 @@ export const classesData: ClassData[] = [
     description: 'Feiticeiros são usuários de magia que nasceram com poder mágico. Eles canalizam magia através de sua linhagem e podem modificar feitiços com metamagia.',
     proficienciesSummary: 'Armas simples. Proficiências em Constituição e Carisma.',
     featuresSummary: 'Magia, Origem Mágica, Metamagia, Pontos de Feitiço',
+    weaponProficiencies: {
+      simpleMelee: true,
+      simpleRanged: true,
+      martialMelee: false,
+      martialRanged: false,
+    },
   },
   {
     index: 'warlock',
@@ -133,6 +199,12 @@ export const classesData: ClassData[] = [
     description: 'Bruxos fazem pactos com entidades poderosas para obter magia. Eles têm poucos feitiços, mas os recuperam rapidamente e têm invocações únicas.',
     proficienciesSummary: 'Armaduras leves, armas simples. Proficiências em Sabedoria e Carisma.',
     featuresSummary: 'Magia de Pacto, Invocações Místicas, Recuperação de Feitiços, Patrono',
+    weaponProficiencies: {
+      simpleMelee: true,
+      simpleRanged: true,
+      martialMelee: false,
+      martialRanged: false,
+    },
   },
   {
     index: 'wizard',
@@ -144,5 +216,11 @@ export const classesData: ClassData[] = [
     description: 'Magos são estudiosos da magia que aprendem feitiços através de estudo e pesquisa. Eles têm o maior arsenal de magias e podem aprender qualquer feitiço.',
     proficienciesSummary: 'Armas simples. Proficiências em Inteligência e Sabedoria.',
     featuresSummary: 'Magia, Recuperação de Feitiços, Grimório, Aprendizado de Magia',
+    weaponProficiencies: {
+      simpleMelee: true,
+      simpleRanged: true,
+      martialMelee: false,
+      martialRanged: false,
+    },
   },
 ];

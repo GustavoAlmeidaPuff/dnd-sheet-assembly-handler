@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha D&D - Template</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Book Antiqua', serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .ficha-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+        }
+
+        /* === HEADER === */
+        .header {
+            border: 1px solid #000;
+            padding: 10px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .logo {
+            border: 1px solid #000;
+            padding: 5px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .info-basica {
+            border: 1px solid #000;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .info-basica > div {
+            border: 1px solid #000;
+            padding: 8px;
+        }
+
+        .info-row-2 {
+            border: 1px solid #000;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            margin-top: 5px;
+        }
+
+        .info-row-2 > div {
+            border: 1px solid #000;
+            padding: 8px;
+        }
+
+        /* === CONTAINER PRINCIPAL === */
+        .main-container {
+            display: grid;
+            grid-template-columns: 250px 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* === COLUNA ESQUERDA (Atributos e Perícias lado a lado) === */
+        .coluna-esquerda {
+            border: 1px solid #000;
+            display: flex;
+            gap: 5px;
+        }
+
+        /* Container dos Atributos */
+        .atributos-container {
+            border: 1px solid #000;
+            flex: 0 0 auto;
+            width: 100px;
+        }
+
+        .atributo-box {
+            border: 1px solid #000;
+            padding: 8px;
+            margin: 5px;
+            text-align: center;
+        }
+
+        .atributo-titulo {
+            font-weight: bold;
+            font-size: 10px;
+            margin-bottom: 5px;
+        }
+
+        .atributo-valor {
+            border: 1px solid #000;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin: 5px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .atributo-modificador {
+            border: 1px solid #000;
+            margin-top: 5px;
+            padding: 3px;
+            font-size: 12px;
+        }
+
+        /* Container das Perícias e Testes */
+        .pericias-container {
+            border: 1px solid #000;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .inspiracao-proficiencia {
+            border: 1px solid #000;
+            padding: 8px;
+            margin: 5px;
+            text-align: center;
+        }
+
+        .circulo-valor {
+            border: 1px solid #000;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            margin: 5px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .teste-resistencia, .pericias {
+            border: 1px solid #000;
+            padding: 10px;
+            margin: 5px;
+        }
+
+        .lista-habilidades {
+            border: 1px solid #000;
+            padding: 5px;
+        }
+
+        .habilidade-item {
+            border: 1px solid #000;
+            padding: 3px;
+            margin: 2px 0;
+            display: flex;
+            align-items: center;
+            font-size: 11px;
+        }
+
+        .habilidade-check {
+            border: 1px solid #000;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 5px;
+            flex-shrink: 0;
+        }
+
+        /* === COLUNA CENTRAL === */
+        .coluna-central {
+            border: 1px solid #000;
+        }
+
+        .caracteristicas-principais {
+            border: 1px solid #000;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        .carac-box {
+            border: 1px solid #000;
+            padding: 15px 10px;
+            text-align: center;
+        }
+
+        .pontos-vida-atuais {
+            border: 1px solid #000;
+            padding: 15px;
+            margin: 5px;
+            min-height: 100px;
+        }
+
+        .pontos-vida-temporarios {
+            border: 1px solid #000;
+            padding: 15px;
+            margin: 5px;
+            min-height: 100px;
+        }
+
+        .pontos-vida-temp {
+            border: 1px solid #000;
+            padding: 10px;
+            margin: 5px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+        }
+
+        .dados-vida, .testes-morte {
+            border: 1px solid #000;
+            padding: 10px;
+        }
+
+        .teste-morte-checks {
+            border: 1px solid #000;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .check-row {
+            display: flex;
+            align-items: center;
+            margin: 3px 0;
+            font-size: 11px;
+        }
+
+        .check-circle {
+            border: 1px solid #000;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+
+        .ataques-magias {
+            border: 1px solid #000;
+            padding: 15px;
+            margin: 5px;
+            min-height: 250px;
+        }
+
+        .equipamento {
+            border: 1px solid #000;
+            padding: 15px;
+            margin: 5px;
+            min-height: 200px;
+        }
+
+        .equipamento-slots {
+            border: 1px solid #000;
+            margin-top: 10px;
+        }
+
+        .equip-slot {
+            border: 1px solid #000;
+            padding: 8px;
+            margin: 3px;
+        }
+
+        /* === COLUNA DIREITA === */
+        .coluna-direita {
+            border: 1px solid #000;
+        }
+
+        .tracos-personalidade, .ideais, .ligacoes, .defeitos {
+            border: 1px solid #000;
+            padding: 15px;
+            margin: 5px;
+            min-height: 80px;
+        }
+
+        .caracteristicas-habilidades {
+            border: 1px solid #000;
+            padding: 15px;
+            margin: 5px;
+            min-height: 400px;
+        }
+
+        /* === RODAPÉ === */
+        .rodape-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .idiomas-proficiencias {
+            border: 1px solid #000;
+            padding: 15px;
+            min-height: 150px;
+        }
+
+        .sabedoria-passiva {
+            border: 1px solid #000;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        label {
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            border: none;
+            border-bottom: 1px solid #ccc;
+            width: 100%;
+            padding: 2px;
+        }
+
+        textarea {
+            border: 1px solid #ccc;
+            width: 100%;
+            min-height: 50px;
+            padding: 5px;
+            resize: vertical;
+        }
+    </style>
+</head>
+<body>
+    <div class="ficha-container">
+        
+        <!-- ========== HEADER ========== -->
+        <div class="header">
+            <div class="logo">
+                DUNGEONS & DRAGONS®
+            </div>
+            
+            <!-- Informações Básicas (Linha 1) -->
+            <div class="info-basica">
+                <div class="campo-classe">
+                    <label>CLASSE E NÍVEL</label>
+                    <input type="text">
+                </div>
+                <div class="campo-antecedente">
+                    <label>ANTECEDENTE</label>
+                    <input type="text">
+                </div>
+                <div class="campo-nome-jogador">
+                    <label>NOME DO JOGADOR</label>
+                    <input type="text">
+                </div>
+            </div>
+            
+            <!-- Informações Básicas (Linha 2) -->
+            <div class="info-row-2">
+                <div class="campo-raca">
+                    <label>RAÇA</label>
+                    <input type="text">
+                </div>
+                <div class="campo-tendencia">
+                    <label>TENDÊNCIA</label>
+                    <input type="text">
+                </div>
+                <div class="campo-pontos-xp">
+                    <label>PONTOS DE EXPERIÊNCIA</label>
+                    <input type="text">
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== CONTAINER PRINCIPAL (3 COLUNAS) ========== -->
+        <div class="main-container">
+            
+            <!-- ===== COLUNA ESQUERDA (Atributos e Perícias lado a lado) ===== -->
+            <div class="coluna-esquerda">
+                
+                <!-- Container dos Atributos (Esquerda) -->
+                <div class="atributos-container">
+                    
+                    <!-- Atributo: Força -->
+                    <div class="atributo-box atributo-forca">
+                        <div class="atributo-titulo">FORÇA</div>
+                        <div class="atributo-valor"></div>
+                        <div class="atributo-modificador">___</div>
+                    </div>
+
+                    <!-- Atributo: Destreza -->
+                    <div class="atributo-box atributo-destreza">
+                        <div class="atributo-titulo">DESTREZA</div>
+                        <div class="atributo-valor"></div>
+                        <div class="atributo-modificador">___</div>
+                    </div>
+
+                    <!-- Atributo: Constituição -->
+                    <div class="atributo-box atributo-constituicao">
+                        <div class="atributo-titulo">CONSTITUIÇÃO</div>
+                        <div class="atributo-valor"></div>
+                        <div class="atributo-modificador">___</div>
+                    </div>
+
+                    <!-- Atributo: Inteligência -->
+                    <div class="atributo-box atributo-inteligencia">
+                        <div class="atributo-titulo">INTELIGÊNCIA</div>
+                        <div class="atributo-valor"></div>
+                        <div class="atributo-modificador">___</div>
+                    </div>
+
+                    <!-- Atributo: Sabedoria -->
+                    <div class="atributo-box atributo-sabedoria">
+                        <div class="atributo-titulo">SABEDORIA</div>
+                        <div class="atributo-valor"></div>
+                        <div class="atributo-modificador">___</div>
+                    </div>
+
+                    <!-- Atributo: Carisma -->
+                    <div class="atributo-box atributo-carisma">
+                        <div class="atributo-titulo">CARISMA</div>
+                        <div class="atributo-valor"></div>
+                        <div class="atributo-modificador">___</div>
+                    </div>
+
+                </div>
+
+                <!-- Container das Perícias e Testes (Direita) -->
+                <div class="pericias-container">
+                    
+                    <!-- Inspiração -->
+                    <div class="inspiracao-proficiencia">
+                        <label>INSPIRAÇÃO</label>
+                        <div class="circulo-valor"></div>
+                    </div>
+
+                    <!-- Bônus de Proficiência -->
+                    <div class="inspiracao-proficiencia">
+                        <label>BÔNUS DE PROFICIÊNCIA</label>
+                        <div class="circulo-valor"></div>
+                    </div>
+
+                    <!-- Testes de Resistência -->
+                    <div class="teste-resistencia">
+                        <label>TESTES DE RESISTÊNCIA</label>
+                        <div class="lista-habilidades">
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Força</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Destreza</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Constituição</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Inteligência</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Sabedoria</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Carisma</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Perícias -->
+                    <div class="pericias">
+                        <label>PERÍCIAS</label>
+                        <div class="lista-habilidades">
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Acrobacia (Des)</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Arcanismo (Int)</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Atletismo (For)</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Atuação (Car)</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Blefar (Car)</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Furtividade (Des)</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ História (Int)</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Intimidação (Car)</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Intuição (Sab)</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Investigação (Int)</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Lidar com Animais (Sab)</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Medicina (Sab)</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Natureza (Int)</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Percepção (Sab)</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Persuasão (Car)</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Prestidigitação (Des)</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Religião (Int)</span>
+                            </div>
+                            <div class="habilidade-item">
+                                <div class="habilidade-check"></div>
+                                <span>___ Sobrevivência (Sab)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ===== COLUNA CENTRAL ===== -->
+            <div class="coluna-central">
+                
+                <!-- Características Principais (Classe, Iniciativa, Deslocamento) -->
+                <div class="caracteristicas-principais">
+                    <div class="carac-box classe-armadura">
+                        <label>CLASSE<br>DE ARMADURA</label>
+                        <div style="margin-top: 10px; font-size: 20px;">__</div>
+                    </div>
+                    <div class="carac-box iniciativa">
+                        <label>INICIATIVA</label>
+                        <div style="margin-top: 10px; font-size: 20px;">__</div>
+                    </div>
+                    <div class="carac-box deslocamento">
+                        <label>DESLOC.</label>
+                        <div style="margin-top: 10px; font-size: 20px;">__</div>
+                    </div>
+                </div>
+
+                <!-- Pontos de Vida Atuais -->
+                <div class="pontos-vida-atuais">
+                    <label>PONTOS DE VIDA ATUAIS</label>
+                    <input type="text" style="margin-top: 10px;">
+                </div>
+
+                <!-- Pontos de Vida Temporários -->
+                <div class="pontos-vida-temporarios">
+                    <label>PONTOS DE VIDA TEMPORÁRIOS</label>
+                    <input type="text" style="margin-top: 10px;">
+                </div>
+
+                <!-- Dados de Vida e Testes de Morte -->
+                <div class="pontos-vida-temp">
+                    <div class="dados-vida">
+                        <label>DADOS DE VIDA</label>
+                        <div style="margin-top: 10px;">
+                            <span>Total: ___</span>
+                        </div>
+                    </div>
+                    <div class="testes-morte">
+                        <label>TESTES CONTRA A MORTE</label>
+                        <div class="teste-morte-checks">
+                            <div class="check-row">
+                                <span>SUCESSO</span>
+                                <div class="check-circle"></div>
+                                <div class="check-circle"></div>
+                                <div class="check-circle"></div>
+                            </div>
+                            <div class="check-row">
+                                <span>FRACASSO</span>
+                                <div class="check-circle"></div>
+                                <div class="check-circle"></div>
+                                <div class="check-circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ataques e Magias -->
+                <div class="ataques-magias">
+                    <label>ATAQUES E MAGIAS</label>
+                    <textarea placeholder="Nome | Bônus | Dano / Tipo"></textarea>
+                </div>
+
+                <!-- Equipamento -->
+                <div class="equipamento">
+                    <label>EQUIPAMENTO</label>
+                    <div class="equipamento-slots">
+                        <div class="equip-slot"></div>
+                        <div class="equip-slot"></div>
+                        <div class="equip-slot"></div>
+                        <div class="equip-slot"></div>
+                        <div class="equip-slot"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ===== COLUNA DIREITA ===== -->
+            <div class="coluna-direita">
+                
+                <!-- Traços de Personalidade -->
+                <div class="tracos-personalidade">
+                    <label>TRAÇOS DE PERSONALIDADE</label>
+                    <textarea></textarea>
+                </div>
+
+                <!-- Ideais -->
+                <div class="ideais">
+                    <label>IDEAIS</label>
+                    <textarea></textarea>
+                </div>
+
+                <!-- Ligações -->
+                <div class="ligacoes">
+                    <label>LIGAÇÕES</label>
+                    <textarea></textarea>
+                </div>
+
+                <!-- Defeitos -->
+                <div class="defeitos">
+                    <label>DEFEITOS</label>
+                    <textarea></textarea>
+                </div>
+
+                <!-- Características e Habilidades -->
+                <div class="caracteristicas-habilidades">
+                    <label>CARACTERÍSTICAS E HABILIDADES</label>
+                    <textarea style="min-height: 350px;"></textarea>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========== RODAPÉ (2 COLUNAS) ========== -->
+        <div class="rodape-container">
+            
+            <!-- Idiomas e Outras Proficiências -->
+            <div class="idiomas-proficiencias">
+                <div class="sabedoria-passiva">
+                    <label>SABEDORIA PASSIVA (PERCEPÇÃO)</label>
+                    <input type="text">
+                </div>
+                <label>IDIOMAS E OUTRAS PROFICIÊNCIAS</label>
+                <textarea></textarea>
+            </div>
+
+            <!-- Espaço Adicional (pode ser usado para anotações) -->
+            <div class="idiomas-proficiencias">
+                <label>ANOTAÇÕES ADICIONAIS</label>
+                <textarea></textarea>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+</html>
