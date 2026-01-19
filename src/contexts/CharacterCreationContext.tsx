@@ -4,11 +4,13 @@ import React, { createContext, useContext, useState, useCallback, useEffect } fr
 import { Character, EquipmentItem } from '@/types/character';
 import { calculateAllModifiers, applyRacialBonuses, calculateAC, calculateHP } from '@/lib/utils/calculations';
 
+type RaceType = Character['race'];
+
 interface CharacterCreationContextType {
   character: Partial<Character>;
   currentStep: number;
   setCurrentStep: (step: number) => void;
-  setRace: (race: Race | null) => void;
+  setRace: (race: RaceType) => void;
   setClass: (classData: { index: string; name: string; hitDie: number } | null) => void;
   setAttributes: (attributes: Character['attributes']) => void;
   setBackground: (background: { index: string; name: string } | null) => void;
