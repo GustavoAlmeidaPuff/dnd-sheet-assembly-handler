@@ -1,0 +1,148 @@
+// Dados estáticos das classes em PT-BR
+
+export interface ClassData {
+  index: string;
+  name: string;
+  role: string;
+  archetype: string;
+  difficulty: string;
+  hitDie: number;
+  description: string;
+  proficienciesSummary: string;
+  featuresSummary: string;
+}
+
+export const classesData: ClassData[] = [
+  {
+    index: 'barbarian',
+    name: 'Bárbaro',
+    role: 'Tanque / Dano',
+    archetype: 'Guerreiro Selvagem',
+    difficulty: 'Fácil',
+    hitDie: 12,
+    description: 'Bárbaros são guerreiros ferozes que canalizam uma fúria primitiva em combate. Eles são conhecidos por sua resistência, força bruta e capacidade de entrar em fúria.',
+    proficienciesSummary: 'Armaduras leves e médias, escudos, armas simples e marciais. Proficiências em Força e Constituição.',
+    featuresSummary: 'Fúria, Defesa sem Armadura, Ataque Selvagem, Sentido do Perigo',
+  },
+  {
+    index: 'bard',
+    name: 'Bardo',
+    role: 'Suporte / Controle',
+    archetype: 'Artista Versátil',
+    difficulty: 'Avançado',
+    hitDie: 8,
+    description: 'Bardos são artistas versáteis que usam música, palavras e magia para inspirar aliados e confundir inimigos. Eles são mestres da magia e da persuasão.',
+    proficienciesSummary: 'Armaduras leves, armas simples, algumas armas marciais. Proficiências em Destreza e Carisma.',
+    featuresSummary: 'Inspiração de Bardo, Magia, Canção de Descanso, Expertise',
+  },
+  {
+    index: 'cleric',
+    name: 'Clérigo',
+    role: 'Suporte / Cura',
+    archetype: 'Servo Divino',
+    difficulty: 'Médio',
+    hitDie: 8,
+    description: 'Clérigos são servos de divindades que canalizam poder divino para curar, proteger e ferir. Eles são versáteis em combate e suporte.',
+    proficienciesSummary: 'Armaduras leves e médias, escudos, armas simples. Proficiências em Sabedoria e Carisma.',
+    featuresSummary: 'Magia Divina, Domínio Divino, Canalizar Divindade, Cura',
+  },
+  {
+    index: 'druid',
+    name: 'Druida',
+    role: 'Suporte / Controle',
+    archetype: 'Guardião da Natureza',
+    difficulty: 'Avançado',
+    hitDie: 8,
+    description: 'Druidas são guardiões da natureza que usam magia primitiva para proteger o mundo natural. Eles podem se transformar em animais e controlar elementos.',
+    proficienciesSummary: 'Armaduras leves e médias (não metálicas), escudos (não metálicos), armas simples. Proficiências em Inteligência e Sabedoria.',
+    featuresSummary: 'Magia, Transformação Selvagem, Companheiro Animal, Magia da Natureza',
+  },
+  {
+    index: 'fighter',
+    name: 'Guerreiro',
+    role: 'Tanque / Dano',
+    archetype: 'Mestre das Armas',
+    difficulty: 'Fácil',
+    hitDie: 10,
+    description: 'Guerreiros são mestres do combate, capazes de usar qualquer arma e armadura. Eles são versáteis e podem se especializar em diferentes estilos de combate.',
+    proficienciesSummary: 'Todas as armaduras, escudos, armas simples e marciais. Proficiências em Força e Constituição.',
+    featuresSummary: 'Estilo de Combate, Ataque Extra, Segunda Respiração, Ação Indomável',
+  },
+  {
+    index: 'monk',
+    name: 'Monge',
+    role: 'Dano / Utilidade',
+    archetype: 'Mestre das Artes Marciais',
+    difficulty: 'Avançado',
+    hitDie: 8,
+    description: 'Monges são mestres das artes marciais que usam ki para realizar proezas sobre-humanas. Eles são ágeis, rápidos e letais em combate desarmado.',
+    proficienciesSummary: 'Armas simples, armas de monge. Proficiências em Força e Destreza.',
+    featuresSummary: 'Artes Marciais, Ki, Movimento sem Armadura, Deflexão de Mísseis',
+  },
+  {
+    index: 'paladin',
+    name: 'Paladino',
+    role: 'Tanque / Suporte',
+    archetype: 'Cavaleiro Sagrado',
+    difficulty: 'Médio',
+    hitDie: 10,
+    description: 'Paladinos são guerreiros sagrados que juram defender justiça e bondade. Eles combinam combate corpo a corpo com magia divina e habilidades de cura.',
+    proficienciesSummary: 'Todas as armaduras, escudos, armas simples e marciais. Proficiências em Sabedoria e Carisma.',
+    featuresSummary: 'Magia Divina, Golpe Divino, Cura pelas Mãos, Aura de Proteção',
+  },
+  {
+    index: 'ranger',
+    name: 'Patrulheiro',
+    role: 'Dano / Utilidade',
+    archetype: 'Guardião da Natureza',
+    difficulty: 'Médio',
+    hitDie: 10,
+    description: 'Patrulheiros são guardiões das fronteiras selvagens, especialistas em sobrevivência e combate à distância. Eles protegem o mundo natural e caçam ameaças.',
+    proficienciesSummary: 'Armaduras leves e médias, escudos, armas simples e marciais. Proficiências em Força e Destreza.',
+    featuresSummary: 'Inimigo Favorecido, Terreno Favorecido, Magia, Companheiro Animal',
+  },
+  {
+    index: 'rogue',
+    name: 'Ladino',
+    role: 'Dano / Utilidade',
+    archetype: 'Mestre das Sombras',
+    difficulty: 'Médio',
+    hitDie: 8,
+    description: 'Ladinos são especialistas em furtividade, armadilhas e ataques precisos. Eles são versáteis fora de combate e letais quando atacam pelas costas.',
+    proficienciesSummary: 'Armaduras leves, armas simples, algumas armas marciais. Proficiências em Destreza e Inteligência.',
+    featuresSummary: 'Ataque Furtivo, Expertise, Esquiva Ágil, Evasão',
+  },
+  {
+    index: 'sorcerer',
+    name: 'Feiticeiro',
+    role: 'Dano / Controle',
+    archetype: 'Nascido com Magia',
+    difficulty: 'Avançado',
+    hitDie: 6,
+    description: 'Feiticeiros são usuários de magia que nasceram com poder mágico. Eles canalizam magia através de sua linhagem e podem modificar feitiços com metamagia.',
+    proficienciesSummary: 'Armas simples. Proficiências em Constituição e Carisma.',
+    featuresSummary: 'Magia, Origem Mágica, Metamagia, Pontos de Feitiço',
+  },
+  {
+    index: 'warlock',
+    name: 'Bruxo',
+    role: 'Dano / Utilidade',
+    archetype: 'Pacto com Poder',
+    difficulty: 'Médio',
+    hitDie: 8,
+    description: 'Bruxos fazem pactos com entidades poderosas para obter magia. Eles têm poucos feitiços, mas os recuperam rapidamente e têm invocações únicas.',
+    proficienciesSummary: 'Armaduras leves, armas simples. Proficiências em Sabedoria e Carisma.',
+    featuresSummary: 'Magia de Pacto, Invocações Místicas, Recuperação de Feitiços, Patrono',
+  },
+  {
+    index: 'wizard',
+    name: 'Mago',
+    role: 'Controle / Utilidade',
+    archetype: 'Mestre das Artes Arcanas',
+    difficulty: 'Avançado',
+    hitDie: 6,
+    description: 'Magos são estudiosos da magia que aprendem feitiços através de estudo e pesquisa. Eles têm o maior arsenal de magias e podem aprender qualquer feitiço.',
+    proficienciesSummary: 'Armas simples. Proficiências em Inteligência e Sabedoria.',
+    featuresSummary: 'Magia, Recuperação de Feitiços, Grimório, Aprendizado de Magia',
+  },
+];

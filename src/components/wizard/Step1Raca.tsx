@@ -1,55 +1,37 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useCharacterCreation } from '@/contexts/CharacterCreationContext';
-import { fetchRaces, fetchRace } from '@/lib/api/dnd5eapi';
-import { Race } from '@/types/api';
-import { translateRace } from '@/lib/utils/translations';
+import { racesData, RaceData } from '@/data/races';
 import Card from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
 
 export default function Step1Raca() {
   const { character, setRace } = useCharacterCreation();
-  const [races, setRaces] = useState<Race[]>([]);
-  const [loading, setLoading] = useState(true);
   const [selectedRaceIndex, setSelectedRaceIndex] = useState<string | null>(
     character.race?.index || null
   );
 
-  // Subset inicial: Humano, Elfo, Anão, Halfling
-  const initialRaces = ['human', 'elf', 'dwarf', 'halfling'];
-
-  useEffect(() => {
-    async function loadRaces() {
-      try {
-        setLoading(true);
-        const raceList = await fetchRaces();
-        const racePromises = raceList.results
-          .filter((r) => initialRaces.includes(r.index))
-          .map((r) => fetchRace(r.index));
-        const raceData = await Promise.all(racePromises);
-        setRaces(raceData);
-      } catch (error) {
-        console.error('Erro ao carregar raças:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    loadRaces();
-  }, []);
-
-  const handleSelectRace = (race: Race) => {
+  const handleSelectRace = (race: RaceData) => {
     setSelectedRaceIndex(race.index);
-    setRace(race);
+    // Passar diretamente os dados estáticos com abilityBonuses
+    setRace({
+      index: race.index,
+      name: race.name,
+      abilityBonuses: race.abilityBonuses,
+    } as any);
   };
 
-  if (loading) {
-    return (
-      <div className="text-center py-12">
-        <div className="text-lg text-gray-600">Carregando raças...</div>
-      </div>
-    );
-  }
+  const getAttributeName = (key: string): string => {
+    const map: { [key: string]: string } = {
+      str: 'Força',
+      dex: 'Destreza',
+      con: 'Constituição',
+      int: 'Inteligência',
+      wis: 'Sabedoria',
+      cha: 'Carisma',
+    };
+    return map[key] || key;
+  };
 
   return (
     <div className="space-y-6">
@@ -60,11 +42,11 @@ export default function Step1Raca() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {races.map((race) => {
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {racesData.map((race) => {
           const isSelected = selectedRaceIndex === race.index;
-          const abilityBonusesText = race.ability_bonuses
-            .map((b) => `${b.ability_score.index.toUpperCase()} +${b.bonus}`)
+          const abilityBonusesText = Object.entries(race.abilityBonuses)
+            .map(([key, bonus]) => `${getAttributeName(key)} +${bonus}`)
             .join(', ');
 
           return (
@@ -74,10 +56,15 @@ export default function Step1Raca() {
               selected={isSelected}
             >
               <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                {translateRace(race.name)}
+                {race.name}
               </h3>
-              <p className="text-gray-700 mb-4">{race.size_description}</p>
-              <div className="space-y-2">
+              <p className="text-gray-700 mb-3 text-sm">{race.description}</p>
+              <div className="mb-3">
+                <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">
+                  {race.vibe}
+                </span>
+              </div>
+              <div className="space-y-2 text-sm">
                 <div>
                   <span className="font-semibold text-gray-800">Bônus de Atributos: </span>
                   <span className="text-blue-600">{abilityBonusesText}</span>
@@ -90,14 +77,14 @@ export default function Step1Raca() {
                   <span className="font-semibold text-gray-800">Tamanho: </span>
                   <span className="text-gray-700">{race.size}</span>
                 </div>
-                {race.traits.length > 0 && (
-                  <div>
-                    <span className="font-semibold text-gray-800">Traços: </span>
-                    <span className="text-gray-700">
-                      {race.traits.length} traço{race.traits.length > 1 ? 's' : ''} racial{race.traits.length > 1 ? 'is' : ''}
-                    </span>
-                  </div>
-                )}
+                <div>
+                  <span className="font-semibold text-gray-800">Traços: </span>
+                  <span className="text-gray-700">{race.traits.join(', ')}</span>
+                </div>
+                <div>
+                  <span className="font-semibold text-gray-800">Idiomas: </span>
+                  <span className="text-gray-700">{race.languages.join(', ')}</span>
+                </div>
               </div>
             </Card>
           );

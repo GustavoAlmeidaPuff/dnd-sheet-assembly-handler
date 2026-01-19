@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useCharacterCreation } from '@/contexts/CharacterCreationContext';
-import { fetchBackground } from '@/lib/api/dnd5eapi';
+import { backgroundsData } from '@/data/backgrounds';
 import Button from '@/components/ui/Button';
 
 // Exemplos de ideais, vínculos e defeitos (do livro do jogador)
@@ -45,25 +45,18 @@ export default function Step6Personalidade() {
   } | null>(null);
 
   useEffect(() => {
-    async function loadBackgroundExamples() {
-      if (!character.background) return;
+    if (!character.background) return;
 
-      try {
-        const bg = await fetchBackground(character.background.index);
-        const ideals = bg.ideals?.from?.options?.map((opt: any) => opt.desc) || [];
-        const bonds = bg.bonds?.from?.options?.map((opt: any) => opt.string) || [];
-        const flaws = bg.flaws?.from?.options?.map((opt: any) => opt.string) || [];
-
-        setBackgroundExamples({
-          ideals,
-          bonds,
-          flaws,
-        });
-      } catch (error) {
-        console.error('Erro ao carregar exemplos do antecedente:', error);
-      }
+    // Buscar exemplos do antecedente selecionado nos dados estáticos
+    const bg = backgroundsData.find((b) => b.index === character.background?.index);
+    if (bg) {
+      // Usar exemplos genéricos, mas poderíamos adicionar exemplos específicos por antecedente
+      setBackgroundExamples({
+        ideals: exampleIdeals,
+        bonds: exampleBonds,
+        flaws: exampleFlaws,
+      });
     }
-    loadBackgroundExamples();
   }, [character.background]);
 
   const handleSave = () => {

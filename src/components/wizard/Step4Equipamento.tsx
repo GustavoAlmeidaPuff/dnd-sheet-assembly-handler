@@ -2,68 +2,23 @@
 
 import React, { useEffect, useState } from 'react';
 import { useCharacterCreation } from '@/contexts/CharacterCreationContext';
-import { fetchStartingEquipment, fetchEquipment } from '@/lib/api/dnd5eapi';
+import { startingEquipmentByClass } from '@/data/equipment';
 import { EquipmentItem } from '@/types/character';
 
 export default function Step4Equipamento() {
   const { character, setEquipment } = useCharacterCreation();
   const [equipment, setEquipmentState] = useState<EquipmentItem[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function loadEquipment() {
-      if (!character.class) {
-        setLoading(false);
-        return;
-      }
-
-      try {
-        setLoading(true);
-        const startingEquipment = await fetchStartingEquipment(character.class.index);
-        
-        // Buscar detalhes de cada equipamento
-        const equipmentDetails = await Promise.all(
-          startingEquipment.map(async (item) => {
-            try {
-              const details = await fetchEquipment(item.equipment.index);
-              return {
-                index: item.equipment.index,
-                name: item.equipment.name,
-                quantity: item.quantity,
-                armorClass: details.armor_class?.base,
-                armorCategory: details.armor_category,
-              } as EquipmentItem;
-            } catch (error) {
-              return {
-                index: item.equipment.index,
-                name: item.equipment.name,
-                quantity: item.quantity,
-              } as EquipmentItem;
-            }
-          })
-        );
-
-        setEquipmentState(equipmentDetails);
-        setEquipment(equipmentDetails);
-        // CA e PV são calculados automaticamente pelo contexto quando equipamento é atualizado
-      } catch (error) {
-        console.error('Erro ao carregar equipamento:', error);
-      } finally {
-        setLoading(false);
-      }
+    if (!character.class) {
+      return;
     }
-    loadEquipment();
-  }, [character.class]);
 
-  // CA e PV são calculados automaticamente pelo contexto quando modificadores/equipamento mudam
-
-  if (loading) {
-    return (
-      <div className="text-center py-12">
-        <div className="text-lg text-gray-600">Carregando equipamento inicial...</div>
-      </div>
-    );
-  }
+    const classEquipment = startingEquipmentByClass[character.class.index] || [];
+    setEquipmentState(classEquipment);
+    setEquipment(classEquipment);
+    // CA e PV são calculados automaticamente pelo contexto quando equipamento é atualizado
+  }, [character.class, setEquipment]);
 
   if (!character.class) {
     return (

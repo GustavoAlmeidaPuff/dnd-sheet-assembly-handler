@@ -1,57 +1,23 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useCharacterCreation } from '@/contexts/CharacterCreationContext';
-import { fetchBackgrounds, fetchBackground } from '@/lib/api/dnd5eapi';
-import { Background } from '@/types/api';
-import { translateBackground } from '@/lib/utils/translations';
+import { backgroundsData, BackgroundData } from '@/data/backgrounds';
 import Card from '@/components/ui/Card';
-
-// Subset inicial: Acólito, Criminoso, Herói do Povo, Sábio
-const initialBackgrounds = ['acolyte', 'criminal-spy', 'folk-hero', 'sage'];
 
 export default function Step5Antecedente() {
   const { character, setBackground } = useCharacterCreation();
-  const [backgrounds, setBackgrounds] = useState<Background[]>([]);
-  const [loading, setLoading] = useState(true);
   const [selectedBackgroundIndex, setSelectedBackgroundIndex] = useState<string | null>(
     character.background?.index || null
   );
 
-  useEffect(() => {
-    async function loadBackgrounds() {
-      try {
-        setLoading(true);
-        const backgroundList = await fetchBackgrounds();
-        const backgroundPromises = backgroundList.results
-          .filter((b) => initialBackgrounds.includes(b.index))
-          .map((b) => fetchBackground(b.index));
-        const backgroundData = await Promise.all(backgroundPromises);
-        setBackgrounds(backgroundData);
-      } catch (error) {
-        console.error('Erro ao carregar antecedentes:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    loadBackgrounds();
-  }, []);
-
-  const handleSelectBackground = (background: Background) => {
+  const handleSelectBackground = (background: BackgroundData) => {
     setSelectedBackgroundIndex(background.index);
     setBackground({
       index: background.index,
       name: background.name,
     });
   };
-
-  if (loading) {
-    return (
-      <div className="text-center py-12">
-        <div className="text-lg text-gray-600">Carregando antecedentes...</div>
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-6">
@@ -62,10 +28,9 @@ export default function Step5Antecedente() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {backgrounds.map((background) => {
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {backgroundsData.map((background) => {
           const isSelected = selectedBackgroundIndex === background.index;
-          const featureDesc = background.feature.desc.join(' ');
 
           return (
             <Card
@@ -74,28 +39,26 @@ export default function Step5Antecedente() {
               selected={isSelected}
             >
               <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                {translateBackground(background.name)}
+                {background.name}
               </h3>
               <div className="space-y-3">
                 <div>
-                  <div className="font-semibold text-gray-800 mb-1">Característica:</div>
-                  <div className="text-sm text-gray-700">{background.feature.name}</div>
-                  <div className="text-xs text-gray-600 mt-1 line-clamp-3">{featureDesc}</div>
+                  <div className="font-semibold text-gray-800 mb-1 text-sm">História:</div>
+                  <div className="text-xs text-gray-700 line-clamp-3">{background.storyHook}</div>
                 </div>
                 <div>
-                  <div className="font-semibold text-gray-800 mb-1">Proficiências:</div>
-                  <div className="text-sm text-gray-700">
-                    {background.starting_proficiencies.map((p) => p.name).join(', ')}
-                  </div>
+                  <div className="font-semibold text-gray-800 mb-1 text-sm">Personalidade:</div>
+                  <div className="text-xs text-gray-700 line-clamp-2">{background.personalityExample}</div>
                 </div>
-                {background.personality_traits && (
-                  <div>
-                    <div className="font-semibold text-gray-800 mb-1">Traços de Personalidade:</div>
-                    <div className="text-xs text-gray-600">
-                      Escolha {background.personality_traits.choose} traço{background.personality_traits.choose > 1 ? 's' : ''}
-                    </div>
-                  </div>
-                )}
+                <div>
+                  <div className="font-semibold text-gray-800 mb-1 text-sm">Habilidades:</div>
+                  <div className="text-xs text-gray-700">{background.skills.join(', ')}</div>
+                </div>
+                <div>
+                  <div className="font-semibold text-gray-800 mb-1 text-sm">Característica:</div>
+                  <div className="text-xs text-gray-700 font-semibold">{background.feature}</div>
+                  <div className="text-xs text-gray-600 mt-1">{background.featureDescription}</div>
+                </div>
               </div>
             </Card>
           );
