@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useCharacterCreation } from '@/contexts/CharacterCreationContext';
 import { Character } from '@/types/character';
 import DiceRoller from '@/components/ui/DiceRoller';
@@ -22,6 +22,7 @@ export default function Step3Atributos() {
   const [diceRolls, setDiceRolls] = useState<{ [key: string]: number }>({});
   const [arrayDistribution, setArrayDistribution] = useState<{ [key: string]: number }>({});
   const [usedArrayValues, setUsedArrayValues] = useState<number[]>([]);
+  const [hasApplied, setHasApplied] = useState(false);
 
   const handleDiceRoll = (attributeKey: string, value: number) => {
     setDiceRolls((prev) => ({ ...prev, [attributeKey]: value }));
@@ -41,7 +42,9 @@ export default function Step3Atributos() {
     setUsedArrayValues((prev) => [...prev, value]);
   };
 
-  const applyAttributes = () => {
+  const applyAttributes = useCallback(() => {
+    if (hasApplied) return; // Evitar aplicar múltiplas vezes
+
     const attributes: Character['attributes'] = {
       strength: 0,
       dexterity: 0,
@@ -62,7 +65,22 @@ export default function Step3Atributos() {
     }
 
     setAttributes(attributes);
-  };
+    setHasApplied(true);
+  }, [method, diceRolls, arrayDistribution, setAttributes, hasApplied]);
+
+  // Resetar hasApplied quando o método mudar
+  useEffect(() => {
+    setHasApplied(false);
+  }, [method]);
+
+  // Aplicar automaticamente quando todos os atributos estiverem prontos
+  useEffect(() => {
+    if (!method || hasApplied) return;
+    
+    if (allAttributesSet()) {
+      applyAttributes();
+    }
+  }, [diceRolls, arrayDistribution, method, hasApplied, applyAttributes]);
 
   const allAttributesSet = () => {
     if (method === 'dice') {
@@ -152,10 +170,10 @@ export default function Step3Atributos() {
           </div>
 
           {allAttributesSet() && (
-            <div className="text-center">
-              <Button onClick={applyAttributes} variant="primary">
-                Aplicar Atributos
-              </Button>
+            <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4 mt-4">
+              <p className="text-green-800 font-semibold text-center">
+                ✓ Todos os atributos foram gerados! Eles foram aplicados automaticamente.
+              </p>
             </div>
           )}
         </div>
@@ -217,10 +235,10 @@ export default function Step3Atributos() {
           </div>
 
           {allAttributesSet() && (
-            <div className="text-center">
-              <Button onClick={applyAttributes} variant="primary">
-                Aplicar Atributos
-              </Button>
+            <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4 mt-4">
+              <p className="text-green-800 font-semibold text-center">
+                ✓ Todos os atributos foram distribuídos! Eles foram aplicados automaticamente.
+              </p>
             </div>
           )}
         </div>

@@ -50,7 +50,9 @@ export default function WizardContainer() {
       case 2:
         return true; // Sempre pode avançar, mas precisa selecionar classe
       case 3:
-        return true; // Sempre pode avançar, mas precisa gerar atributos
+        // Verificar se todos os atributos foram gerados e aplicados
+        if (!character.attributes) return false;
+        return Object.values(character.attributes).every((v) => v > 0);
       case 4:
         return true; // Equipamento é carregado automaticamente
       case 5:
